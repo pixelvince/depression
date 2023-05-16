@@ -82,58 +82,63 @@
         }
     </style>
     <script>
+        /* Update the changeText() function to start and stop the text animation with the music */
         function changeText() {
+            /* Get the audio element */
+            const audio = document.getElementById("audio");
+            /* Get the message box element */
+            const messageBox = document.getElementById("message-box");
             /* Define an array of synonyms */
             const synonyms = ['Sadness', 'Melancholy', 'Despair', 'Hopelessness', 'Misery', 'Sorrow', 'Gloom', 'Dejection', 'Dismay', 'Anguish', 'Woe', 'Distress', 'Downheartedness', 'Despondency', 'Discouragement', 'Desolation', 'Grief', 'Heartache', 'Mournfulness', 'Torment', 'Wretchedness', 'Bleakness', 'Blue', 'Cheerlessness', 'Despondence', 'Dispiritedness', 'Dolefulness', 'Dolor', 'Dreariness', 'Forlornness', 'Grief', 'Heaviness', 'Hole', 'Low Spirits', 'Melancholia', 'Miserableness', 'Moodiness', 'Oppression', 'Sorrowfulness', 'Unhappiness', 'Woefulness', 'Blackness', 'Darkness', 'Dejectedness', 'Despond', 'Disconsolateness', 'Disheartenment', 'Dispiritedness', 'Downcastness', 'Downheartedness', 'Downness', 'Drear', 'Dullness', 'Flatness', 'Heavyheartedness', 'Langour', 'Languidness', 'Lassitude', 'Listlessness', 'Lowness', 'Melancholic', 'Moping', 'Mournfulness', 'Somberness', 'Sullenness', 'Tedium', 'Tiredness', 'Torpor', 'Yawn', 'Apathy', 'Boredom', 'Ennui', 'Inactivity', 'Indifference', 'Lethargy', 'Stagnation', 'Tediousness', 'Torpor', 'Unresponsiveness', 'Weariness', 'Anhedonia', 'Emptiness', 'Numbness', 'Blankness', 'Hollowness', 'Lifelessness', 'Flatness', 'Apathy', 'Listlessness', 'Indifference', 'Passivity'];
-            /* Get the element that displays the text */
-            const textElement = document.getElementById('depression-text');
-            /* Choose a random synonym from the array and set it as the text */
-            const randomIndex = Math.floor(Math.random() * synonyms.length);
-            textElement.innerText = synonyms[randomIndex];
-        }
-        /* Call the changeText function every 250 milliseconds to change the text */
-        setInterval(changeText, 250);
-        
-        // Add an event listener to play the audio when the page has loaded
-        document.addEventListener('DOMContentLoaded', function () {
-            const audioElement = document.getElementById('background-audio');
-            audioElement.volume = 0.3; // Set the volume at 30%
-            showMessage();
-        });
+            /* Define a variable to keep track of the current index */
+            let currentIndex = 0;
+            /* Define a variable to keep track of the interval */
+            let intervalId = null;
 
-        function showMessage() {
-            const messageBox = document.getElementById('message-box');
-            messageBox.style.opacity = 1;
+            /* Define a function to start the animation */
+            function startAnimation() {
+                /* If an interval is already running, clear it */
+                if (intervalId !== null) {
+                    clearInterval(intervalId);
+                }
+                /* Set an interval to change the text every 2 seconds */
+                intervalId = setInterval(() => {
+                    /* Set the text of the message box to the current synonym */
+                    messageBox.innerHTML = synonyms[currentIndex];
+                    /* Increment the index */
+                    currentIndex++;
+                    /* If the index is greater than or equal to the length of the array, reset it to 0 */
+                    if (currentIndex >= synonyms.length) {
+                        currentIndex = 0;
+                    }
+                }, 2000);
+            }
 
-            setTimeout(function() {
-                messageBox.style.opacity = 0;
-            }, 5000);
+            /* Define a function to stop the animation */
+            function stopAnimation() {
+                /* If an interval is running, clear it */
+                if (intervalId !== null) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                }
+            }
+
+            /* Add an event listener to the audio element to start and stop the animation */
+            audio.addEventListener("play", startAnimation);
+            audio.addEventListener("pause", stopAnimation);
         }
     </script>
 </head>
-<body onclick="toggleAudio()">
+<body>
+    <!-- Add an audio element with the source of the music file -->
+    <audio id="audio" src="music.mp3"></audio>
+    <!-- Add a message box to display the changing text -->
+    <div id="message-box" class="centered-text">Depression</div>
+    <!-- Add a background animation -->
     <div class="background-animation"></div>
-    <audio src="i don't sleep.mp3" id="background-audio" loop></audio>
-    <!-- Display the text in a box in the center of the screen -->
-    <div class="centered-text" id="depression-text">
-        Depression
-    </div>
-    <!-- Update the message box div -->
-    <div id="message-box">
-        click to start/pause music
-    </div>
-    <script>
-        function toggleAudio() {
-            const audioElement = document.getElementById('background-audio');
-            const messageBox = document.getElementById('message-box');
-            if (audioElement.paused) {
-                audioElement.play();
-            } else {
-                audioElement.pause();
-            }
-            // Hide the message box when the user clicks
-            messageBox.style.opacity = 0;
-        }
-    </script>
+    <!-- Add a button to start the animation -->
+    <button onclick="changeText(); audio.play();">Start</button>
+    <!-- Add a button to pause the animation -->
+    <button onclick="audio.pause();">Pause</button>
 </body>
 </html>
