@@ -54,17 +54,25 @@
         /* Call the changeText function every 250 milliseconds to change the text */
         setInterval(changeText, 250);
         
+        // Add an event listener to play the audio when the page has loaded
         document.addEventListener('DOMContentLoaded', function () {
             const audioElement = document.getElementById('background-audio');
             audioElement.play();
         });
     </script>
 </head>
-<body>
-    <audio src="i don't sleep.mp3" id="background-audio" loop muted></audio>
+<body onclick="playAudio()">
+    <audio src="i don't sleep.mp3" id="background-audio" loop></audio>
     <!-- Display the text in a box in the center of the screen -->
     <div class="centered-text" id="depression-text">
         Depression
     </div>
+        <script>
+        function playAudio() {
+            const audioElement = document.getElementById('background-audio');
+            audioElement.play();
+            document.removeEventListener('click', playAudio);
+        }
+    </script>
 </body>
 </html>
