@@ -42,7 +42,7 @@
         }
         .background-animation {
             animation: opacityAnimation 2s infinite alternate;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.7);
             position: fixed;
             top: 0;
             left: 0;
@@ -53,16 +53,17 @@
 
         @keyframes opacityAnimation {
             0% {
-                background-color: rgba(0, 0, 0, 0.8);
+                background-color: rgba(0, 0, 0, 0.7);
             }
             100% {
                 background-color: rgba(0, 0, 0, 0.9);
             }
         }
         
+        /* Update styles for the message box */
         #message-box {
             position: fixed;
-            top: 30px;
+            top: 10px;
             left: 50%;
             transform: translateX(-50%);
             background-color: rgba(0, 0, 0, 0.3);
@@ -72,6 +73,9 @@
             opacity: 0;
             transition: opacity 1s;
             z-index: 100;
+            /* Add font properties */
+            font-family: Arial, sans-serif;
+            font-weight: bold;
         }
     </style>
     <script>
