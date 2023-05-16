@@ -15,6 +15,7 @@
             position: relative;
             background-image: url('csmsad.jpg');
             background-size: cover;
+            cursor: auto;
         }
 
         /* Make the image darker by increasing the opacity of the overlay */
@@ -107,8 +108,22 @@
 
             setTimeout(function() {
                 messageBox.style.opacity = 0;
-            }, 5000);
+            }, 3000);
         }
+            let cursorTimeout;
+
+        function hideCursor() {
+            document.body.style.cursor = 'none';
+        }
+
+        function resetCursorTimeout() {
+            clearTimeout(cursorTimeout);
+            document.body.style.cursor = 'auto';
+            cursorTimeout = setTimeout(hideCursor, 3000); // 3000 milliseconds = 3 seconds
+        }
+
+        document.addEventListener('mousemove', resetCursorTimeout);
+        cursorTimeout = setTimeout(hideCursor, 3000);
     </script>
 </head>
 <body onclick="toggleAudio()">
