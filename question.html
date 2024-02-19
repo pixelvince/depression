@@ -3,29 +3,66 @@
 <head>
     <title>Be My Girlfriend?</title>
     <style>
-        body {
-            text-align: center;
-            margin-top: 20%;
+        body, html {
+            height: 100%;
+            margin: 0;
             font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Light grey background for a minimal look */
+            color: #333; /* Dark grey text for contrast */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+        .big-text {
+            font-size: 48px;
+            font-weight: bold;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+        button:hover {
+            background-color: #ddd;
+            color: black;
         }
         #noBtn {
-            position: absolute;
-            cursor: pointer;
+            background-color: #f44336; /* Red */
         }
     </style>
 </head>
 <body>
-    <h2>Would you like to be my girlfriend?</h2>
-    <button onclick="yesClicked()">Yes</button>
-    <button id="noBtn">No</button>
+    <div id="content">
+        <h2>Will you be my girlfriend?</h2>
+        <button onclick="yesClicked()">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+    <div id="response" class="hidden">
+        <p class="big-text">Yay! You're my pretty princess now!</p>
+    </div>
     <script>
         function yesClicked() {
-            alert("Yay! You're my pretty princess now!");
+            document.getElementById("content").classList.add("hidden");
+            document.getElementById("response").classList.remove("hidden");
         }
 
-        document.getElementById("noBtn").onmouseover = function() {
-            this.style.left = Math.random() * window.innerWidth + 'px';
-            this.style.top = Math.random() * window.innerHeight + 'px';
+        document.getElementById("noBtn").onmouseover = function(event) {
+            const noBtn = this;
+            let newX = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            let newY = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'absolute'; // Ensure button can move freely
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
         }
     </script>
 </body>
