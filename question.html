@@ -14,16 +14,40 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            overflow-x: hidden; /* Prevent horizontal overflow */
+            overflow-x: hidden;
+        }
+        #startScreen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000; /* Ensure it's above everything else */
+        }
+        #isleta {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 96px;
+            color: #333;
+            opacity: 0;
+            transition: opacity 2s;
+            z-index: 999; /* Below the start screen */
         }
         img {
             max-width: 100%;
             height: auto;
-            margin-bottom: 20px; /* Space between GIF and text */
+            margin-bottom: 20px;
         }
-        h2 {
-            font-size: 32px;
-            margin: 20px 0;
+        h2, .signature, #content, #response {
+            display: none; /* Hide everything initially */
         }
         .hidden {
             display: none;
@@ -31,7 +55,7 @@
         .big-text {
             font-size: 60px;
             font-weight: bold;
-            margin-top: 20px; /* Adjusted margin to prevent overlap */
+            margin-top: 20px;
         }
         button {
             font-size: 24px;
@@ -50,46 +74,32 @@
         }
         #noBtn {
             background-color: #f44336;
-            position: relative; /* Adjusted for consistent positioning */
         }
     </style>
 </head>
 <body>
-    <img id="firstGif" src="https://media.tenor.com/Ex1pkci_-v8AAAAi/white-cute-cat-hearts.gif" alt="Cute Cat with Hearts">
-    <div id="content">
-        <h2>Will you be my girlfriend?</h2>
-        <button id="yesBtn" onclick="yesClicked()">Yes</button>
-        <button id="noBtn" onclick="moveButton()" onmouseover="changeGif()" onmouseout="resetGif()">No</button>
-    </div>
-    <div id="response" class="hidden">
-        <p class="big-text">Yay! You're my pretty princess now!</p>
-    </div>
+    <div id="startScreen" onclick="startExperience()">Click to start</div>
+    <div id="isleta">Isleta!</div>
+    <!-- Original site content here -->
     <script>
-        const originalGif = "https://media.tenor.com/Ex1pkci_-v8AAAAi/white-cute-cat-hearts.gif";
-        const hoverGif = "https://media.tenor.com/r7PKNiF--nUAAAAi/mochi-cry.gif";
-
-        function yesClicked() {
-            document.getElementById("content").classList.add("hidden");
-            document.getElementById("response").classList.remove("hidden");
-            document.getElementById("firstGif").src = originalGif; // Reset to original or set to a success GIF
-        }
-
-        function moveButton() {
-            const noBtn = document.getElementById("noBtn");
-            let newX = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            let newY = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
-        }
-
-        function changeGif() {
-            document.getElementById("firstGif").src = hoverGif;
-        }
-
-        function resetGif() {
-            document.getElementById("firstGif").src = originalGif;
+        function startExperience() {
+            document.getElementById("startScreen").style.display = "none";
+            const isleta = document.getElementById("isleta");
+            isleta.style.opacity = 1;
+            setTimeout(() => {
+                isleta.style.opacity = 0;
+                isleta.addEventListener('transitionend', () => {
+                    isleta.style.display = 'none';
+                    // Show the main content after the fade
+                    document.querySelector('h2').style.display = 'block';
+                    document.querySelector('.signature').style.display = 'block';
+                    document.getElementById('content').style.display = 'flex';
+                    document.getElementById('content').style.flexDirection = 'column';
+                    document.getElementById('content').style.alignItems = 'center';
+                }, {once: true});
+            }, 2000); // Adjust time as needed
         }
     </script>
+    <!-- The rest of the original script for handling the site's interactivity -->
 </body>
 </html>
