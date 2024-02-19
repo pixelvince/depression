@@ -49,16 +49,19 @@
             background-color: #ddd;
             color: black;
         }
+        #yesBtn {
+            position: relative; /* Adjusted for consistent positioning */
+            right: 20px; /* Adjust based on your preference to simulate the 'No' button presence */
+        }
         #noBtn {
             background-color: #f44336;
-            position: relative; /* Adjusted for consistent positioning */
         }
     </style>
 </head>
 <body>
     <img id="firstGif" src="https://media.tenor.com/Ex1pkci_-v8AAAAi/white-cute-cat-hearts.gif" alt="Cute Cat with Hearts">
     <div id="content">
-        <h2>Would you like to be my girlfriend?</h2>
+        <h2>Will you be my girlfriend?</h2>
         <button id="yesBtn" onclick="yesClicked()">Yes</button>
         <button id="noBtn" onclick="moveButton()" onmouseover="changeGif()" onmouseout="resetGif()">No</button>
     </div>
@@ -68,11 +71,12 @@
     <script>
         const originalGif = "https://media.tenor.com/Ex1pkci_-v8AAAAi/white-cute-cat-hearts.gif";
         const hoverGif = "https://media.tenor.com/r7PKNiF--nUAAAAi/mochi-cry.gif";
+        const yesGif = "https://media.tenor.com/ZcVWdmsZ9NEAAAAi/cat-cute.gif"; // GIF to show when "Yes" is clicked
 
         function yesClicked() {
             document.getElementById("content").classList.add("hidden");
             document.getElementById("response").classList.remove("hidden");
-            document.getElementById("firstGif").src = originalGif; // Reset to original or set to a success GIF
+            document.getElementById("firstGif").src = yesGif; // Change to the specified GIF
         }
 
         function moveButton() {
@@ -82,6 +86,10 @@
             noBtn.style.position = 'absolute';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
+
+            // Optional: Adjust the positioning of the "Yes" button slightly to the left
+            const yesBtn = document.getElementById("yesBtn");
+            yesBtn.style.right = "50px"; // Increase or adjust as necessary to maintain the layout
         }
 
         function changeGif() {
