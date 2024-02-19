@@ -14,20 +14,16 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Prevent horizontal overflow */
         }
         img {
             max-width: 100%;
             height: auto;
-            margin-bottom: 20px;
+            margin-bottom: 20px; /* Space between GIF and text */
         }
         h2 {
             font-size: 32px;
-            margin-bottom: 5px;
-        }
-        .signature {
-            font-size: 24px;
-            margin-top: 0;
+            margin: 20px 0;
         }
         .hidden {
             display: none;
@@ -35,7 +31,7 @@
         .big-text {
             font-size: 60px;
             font-weight: bold;
-            margin-top: 20px;
+            margin-top: 20px; /* Adjusted margin to prevent overlap */
         }
         button {
             font-size: 24px;
@@ -54,11 +50,7 @@
         }
         #noBtn {
             background-color: #f44336;
-            position: absolute; /* This makes the No button move independently */
-        }
-        #buttons {
-            position: relative; /* Ensures the container's position is relative */
-            height: 50px; /* Gives enough space for buttons */
+            position: relative; /* Adjusted for consistent positioning */
         }
     </style>
 </head>
@@ -66,29 +58,37 @@
     <img id="firstGif" src="https://media.tenor.com/Ex1pkci_-v8AAAAi/white-cute-cat-hearts.gif" alt="Cute Cat with Hearts">
     <div id="content">
         <h2>Will you be my girlfriend?</h2>
-        <div class="signature">-jonni ❤️</div>
-        <div id="buttons">
-            <button id="yesBtn" onclick="yesClicked()" style="position: relative; left: 0;">Yes</button>
-            <!-- The Yes button has a relative position but is not affected by the No button's movement -->
-            <button id="noBtn">No</button>
-        </div>
+        <button id="yesBtn" onclick="yesClicked()">Yes</button>
+        <button id="noBtn" onclick="moveButton()" onmouseover="changeGif()" onmouseout="resetGif()">No</button>
     </div>
     <div id="response" class="hidden">
         <p class="big-text">Yay! You're my pretty princess now!</p>
     </div>
     <script>
+        const originalGif = "https://media.tenor.com/Ex1pkci_-v8AAAAi/white-cute-cat-hearts.gif";
+        const hoverGif = "https://media.tenor.com/r7PKNiF--nUAAAAi/mochi-cry.gif";
+
         function yesClicked() {
             document.getElementById("content").classList.add("hidden");
             document.getElementById("response").classList.remove("hidden");
-            document.getElementById("firstGif").src = "https://media.tenor.com/ZcVWdmsZ9NEAAAAi/cat-cute.gif";
+            document.getElementById("firstGif").src = originalGif; // Reset to original or set to a success GIF
         }
 
-        document.getElementById("noBtn").onmouseover = function(event) {
-            const noBtn = this;
-            let newX = Math.random() * (window.innerWidth - noBtn.offsetWidth) - document.getElementById("buttons").getBoundingClientRect().left;
-            let newY = Math.random() * (window.innerHeight - noBtn.offsetHeight) - document.getElementById("buttons").getBoundingClientRect().top;
+        function moveButton() {
+            const noBtn = document.getElementById("noBtn");
+            let newX = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            let newY = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'absolute';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
+        }
+
+        function changeGif() {
+            document.getElementById("firstGif").src = hoverGif;
+        }
+
+        function resetGif() {
+            document.getElementById("firstGif").src = originalGif;
         }
     </script>
 </body>
