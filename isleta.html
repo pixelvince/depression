@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+<!-- made with <3 for isleta by jonni -->
 <html>
 <head>
-    <title>Be My Girlfriend?</title>
+    <title>be my girlfriend</title>
     <style>
         body, html {
             height: 100%;
@@ -14,25 +15,25 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            overflow-x: hidden; /* Prevent horizontal overflow */
+            overflow-x: hidden; /* avoid horizontal scroll */
         }
         img {
-            width: 300px; /* Fixed width */
-            height: 300px; /* Fixed height, adjust as needed */
-            object-fit: cover; /* This will cover the area of the img element without stretching the image */
-            margin-bottom: 20px; /* Space between GIF and text */
+            width: 300px; /* set image width */
+            height: 300px; /* set image height */
+            object-fit: cover; /* make image cover space without stretching */
+            margin-bottom: 20px; /* space between image and text */
         }
         h2 {
             font-size: 32px;
             margin: 20px 0;
         }
         .hidden {
-            display: none;
+            display: none; /* hide elements */
         }
         .big-text {
             font-size: 60px;
             font-weight: bold;
-            margin-top: 20px; /* Adjusted margin to prevent overlap */
+            margin-top: 20px; /* extra space on top */
         }
         button {
             font-size: 24px;
@@ -41,7 +42,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s, left 0.5s ease, top 0.5s ease, transform 0.5s ease; /* Add transition for transform */
+            transition: background-color 0.3s, left 0.5s ease, top 0.5s ease, transform 0.5s ease; /* smooth transitions */
             background-color: #4CAF50;
             color: white;
         }
@@ -51,43 +52,43 @@
         }
         #noBtn {
             background-color: #f44336;
-            position: relative; /* Initialize position to enable transition */
+            position: relative; /* set for movement */
         }
     </style>
 </head>
 <body>
-    <img id="firstGif" src="https://media.tenor.com/Ex1pkci_-v8AAAAi/white-cute-cat-hearts.gif" alt="Cute Cat with Hearts">
+    <img id="firstGif" src="https://media.tenor.com/Ex1pkci_-v8AAAAi/white-cute-cat-hearts.gif" alt="cute cat with hearts">
     <div id="content">
-        <h2>Will you be my girlfriend?</h2>
-        <button id="yesBtn" onclick="yesClicked()">Yes</button>
-        <button id="noBtn" onclick="moveButton()" onmouseover="changeGif()" onmouseout="resetGif()">No</button>
+        <h2>will you be my girlfriend</h2>
+        <button id="yesBtn" onclick="yesClicked()">yes</button>
+        <button id="noBtn" onclick="moveButton()" onmouseover="changeGif()" onmouseout="resetGif()">no</button>
     </div>
     <div id="response" class="hidden">
-        <p class="big-text">Yay! You're my pretty princess now!</p>
+        <p class="big-text">yay you're my pretty princess now</p>
     </div>
     <script>
         const originalGif = "https://media.tenor.com/Ex1pkci_-v8AAAAi/white-cute-cat-hearts.gif";
         const hoverGif = "https://media.tenor.com/r7PKNiF--nUAAAAi/mochi-cry.gif";
-        const yesGif = "https://media.tenor.com/ZcVWdmsZ9NEAAAAi/cat-cute.gif"; // GIF to show when "Yes" is clicked
+        const yesGif = "https://media.tenor.com/ZcVWdmsZ9NEAAAAi/cat-cute.gif"; // gif for yes click
 
-        let scale = 1; // Initial scale for the "No" button
+        let scale = 1; // start scale for no button
 
         function yesClicked() {
             document.getElementById("content").classList.add("hidden");
             document.getElementById("response").classList.remove("hidden");
-            document.getElementById("firstGif").src = yesGif; // Change to the specified GIF
+            document.getElementById("firstGif").src = yesGif; // switch gif
         }
 
         function moveButton() {
             const noBtn = document.getElementById("noBtn");
             if (!noBtn.style.left) {
-                noBtn.style.position = 'absolute'; // Change to absolute positioning
+                noBtn.style.position = 'absolute'; // make position absolute
                 noBtn.style.left = noBtn.offsetLeft + 'px';
                 noBtn.style.top = noBtn.offsetTop + 'px';
             }
 
-            scale *= 0.8; // Reduce size by 10% upon each click
-            if (scale < 0.3) { // When too small, hide the button
+            scale *= 0.8; // shrink on click
+            if (scale < 0.3) { // hide if too small
                 noBtn.style.display = 'none';
             } else {
                 setTimeout(() => {
@@ -95,17 +96,17 @@
                     let newY = Math.random() * (window.innerHeight - noBtn.offsetHeight * scale);
                     noBtn.style.left = newX + 'px';
                     noBtn.style.top = newY + 'px';
-                    noBtn.style.transform = `scale(${scale})`; // Apply scaling
-                }, 10); // Delay to allow CSS transition
+                    noBtn.style.transform = `scale(${scale})`; // apply scale
+                }, 10); // delay for css transition
             }
         }
 
         function changeGif() {
-            document.getElementById("firstGif").src = hoverGif;
+            document.getElementById("firstGif").src = hoverGif; // change on hover
         }
 
         function resetGif() {
-            document.getElementById("firstGif").src = originalGif;
+            document.getElementById("firstGif").src = originalGif; // reset gif
         }
     </script>
 </body>
