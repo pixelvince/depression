@@ -41,7 +41,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, left 0.5s ease, top 0.5s ease, transform 0.5s ease; /* Add transition for transform */
             background-color: #4CAF50;
             color: white;
         }
@@ -49,18 +49,16 @@
             background-color: #ddd;
             color: black;
         }
-        #yesBtn {
-            position: relative; /* Adjusted for consistent positioning */
-        }
         #noBtn {
             background-color: #f44336;
+            position: relative; /* Initialize position to enable transition */
         }
     </style>
 </head>
 <body>
     <img id="firstGif" src="https://media.tenor.com/Ex1pkci_-v8AAAAi/white-cute-cat-hearts.gif" alt="Cute Cat with Hearts">
     <div id="content">
-        <h2>Would you like to be my girlfriend?</h2>
+        <h2>Will you be my girlfriend?</h2>
         <button id="yesBtn" onclick="yesClicked()">Yes</button>
         <button id="noBtn" onclick="moveButton()" onmouseover="changeGif()" onmouseout="resetGif()">No</button>
     </div>
@@ -72,6 +70,8 @@
         const hoverGif = "https://media.tenor.com/r7PKNiF--nUAAAAi/mochi-cry.gif";
         const yesGif = "https://media.tenor.com/ZcVWdmsZ9NEAAAAi/cat-cute.gif"; // GIF to show when "Yes" is clicked
 
+        let scale = 1; // Initial scale for the "No" button
+
         function yesClicked() {
             document.getElementById("content").classList.add("hidden");
             document.getElementById("response").classList.remove("hidden");
@@ -80,15 +80,24 @@
 
         function moveButton() {
             const noBtn = document.getElementById("noBtn");
-            let newX = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            let newY = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
+            if (!noBtn.style.left) {
+                noBtn.style.position = 'absolute'; // Change to absolute positioning
+                noBtn.style.left = noBtn.offsetLeft + 'px';
+                noBtn.style.top = noBtn.offsetTop + 'px';
+            }
 
-            // Optional: Adjust the positioning of the "Yes" button slightly to the left
-            const yesBtn = document.getElementById("yesBtn");
-            yesBtn.style.right = "50px"; // Increase or adjust as necessary to maintain the layout
+            scale *= 0.8; // Reduce size by 10% upon each click
+            if (scale < 0.3) { // When too small, hide the button
+                noBtn.style.display = 'none';
+            } else {
+                setTimeout(() => {
+                    let newX = Math.random() * (window.innerWidth - noBtn.offsetWidth * scale);
+                    let newY = Math.random() * (window.innerHeight - noBtn.offsetHeight * scale);
+                    noBtn.style.left = newX + 'px';
+                    noBtn.style.top = newY + 'px';
+                    noBtn.style.transform = `scale(${scale})`; // Apply scaling
+                }, 10); // Delay to allow CSS transition
+            }
         }
 
         function changeGif() {
